@@ -1,38 +1,131 @@
-.App {
-  text-align: center;
+/* top bar */
+.live-topbar {
+    height: 62px;
+    background: #f7f7f7;
+    color: #000000;
+    border-bottom: #fff solid 2px;
+    display: flex;
+    align-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0 0 0 0.6666666667rem;
+    position: relative;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.dashpack-header-sm {
+    /* background-image: linear-gradient(135deg,#667eea 0,#764ba2 100%); */
+    width: 84px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    display: block;
+    font-weight: 400;
+    font-size: 1.7rem;
+    font-style: italic;
+    color: rgba(255,255,255,.7);
+    text-transform: lowercase;
+    border-radius: 0.25rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.live-topbar  h5{
+    margin: 0 0 0 1rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.theme-options-vis {
+    opacity: 1;
+    visibility: visible;
+    position: static;
 }
 
-.App-link {
-  color: #61dafb;
+.theme-options>div {
+    margin: 0 auto;
+    position: relative;
+    z-index: 25;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.theme-options-vis>div a {
+    height: 44px;
+    line-height: 44px;
+    width: 44px;
+    margin: 0 0.2rem;
+    
+    display: inline-block;
+    border-radius: 100%;
+    padding: 0;
+    border: 0;
+    box-shadow: 0 25px 20px -20px rgb(0 0 0 / 10%), 0 0 15px rgb(0 0 0 / 6%);
+}
+
+.icon{
+    height: 44px;
+    line-height: 44px;
+    width: 44px;
+    display: block;
+    color: #000;
+    font-size: 1.3rem;
+}
+
+/* Sidebar */
+.sidebar {
+    height: 90vh;
+    left: 0;
+    top: 4rem;
+    z-index: 99;
+    padding-bottom: 50px;
+    position: fixed;
+    width: 270px;
+    overflow: hidden;
+    overflow-y: auto;
+    transition: 0.5s;
+    background: #f7f7f7;
+    box-shadow: 0 12px 30px rgb(80 143 244 / 10%);
+}
+.metismenu{
+    margin: 0;
+    padding: 0;
+}
+.metismenu > li{
+    margin-left: 30px;
+    list-style: none;
+}
+.metismenu > li a {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 15px 25px 15px 30px;
+    transition: .3s;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: 26px auto;
+    grid-gap: 15px;
+    align-items: center;
+    position: relative;
+}
+.mm-active > a {
+    color: #000000;
+    font-weight: 500;
+    font-size: larger;
+}
+
+/* Main Section */
+.mainSection{
+    padding-left: 270px;
+    width: 100%;
+    padding-top: 0px !important;
+    transition: .5s;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 90px;
+    overflow: hidden;
+}
+
+.numberText{
+    font-size: x-large;
+    font-weight: 500;
+    color: red;
+}
+
+.statNumber{
+    font-size: xx-large;
+    font-weight: 500;
+    color: darkgrey;
 }
