@@ -1,49 +1,68 @@
-import React from 'react'
-import Navbar from "../Components/Navbar";
-import Sidebar from "../Components/Sidebar";
+import React from "react";
+import MainLayout from "../Components/layout/MainLayout";
+import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
+import NotificationsOffOutlinedIcon from "@mui/icons-material/NotificationsOffOutlined";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const Alarms = () => {
   return (
     <>
-      {/* Navbar */}
-      <Navbar />
-
-      <div>
-        {/* Sidebar */}
-        <Sidebar highlight="alarm" />
-
-        {/* Main Content */}
-        <section className="mainSection">
-          <div className="container-md m-5">
-            <p className="h5 text-danger">Active Alarms</p>
-            <hr />
-
-            <p>
-              <small>No Active Alarms</small>
-            </p>
-            <br />
-
-            <p className="h4">Alarms</p>
-            <hr />
-            <div className="container ms-3">
-              <small>Victim Name:</small> <strong>Keith</strong>
-              <br />
-              <small>Date: 2022-03-21 08:31:06.407</small>
-              <hr />
-              <small>Victim Name:</small> <strong>Raymond</strong>
-              <br />
-              <small>Date: 2022-05-01 13:46:06.407</small>
-              <hr />
-              <small>Victim Name:</small> <strong>Nancy</strong>
-              <br />
-              <small>Date: 2022-06-15 20:55:06.669</small>
-              <hr />
+      <MainLayout highlight="alarms">
+        <section>
+          <p className="font-bold text-2xl my-4">Alarms !</p>
+          <div className="justify-center text-center flex flex-row space-x-8">
+            <div className="bg-emerald-200 py-4 px-6 rounded-2xl">
+              <NotificationsActiveOutlinedIcon sx={{ fontSize: 45 }} />
+              <p className="font-semibold text-xl">Active Alarms</p>
+            </div>
+            <div className="bg-emerald-200 py-4 px-6 rounded-2xl">
+              <NotificationsOffOutlinedIcon sx={{ fontSize: 45 }} />
+              <p className="font-semibold text-xl">Closed Alarms</p>
+            </div>
+          </div>
+          <div className="bg-emerald-200 py-4 px-6 rounded-2xl my-4">
+            <div>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="rounded-full w-3/4 px-3 py-2 my-2"
+                />
+              </div>
+              <div className="my-2 mx-4">
+                <div className="grid grid-row divide-y-2">
+                  <div className="flex flex-row justify-between items-center">
+                    <div className="py-2 flex flex-row items-center space-x-4">
+                      <NotificationsActiveOutlinedIcon sx={{ fontSize: 40 }} />
+                      <div className="flex flex-col">
+                        <p className="font-semibold">Just Name</p>
+                        <p>13 Jan 2022, 14:00</p>
+                      </div>
+                    </div>
+                    <div>
+                      <MoreVertIcon sx={{ fontSize: 25 }} />
+                    </div>
+                  </div>
+                  <div className="flex flex-row justify-between items-center">
+                    <div className="py-2 flex flex-row items-center space-x-4">
+                      <NotificationsActiveOutlinedIcon sx={{ fontSize: 40 }} />
+                      <div className="flex flex-col">
+                        <p className="font-semibold">Just Name</p>
+                        <p>13 Jan 2022, 14:00</p>
+                      </div>
+                    </div>
+                    <div>
+                      <MoreVertIcon sx={{ fontSize: 25 }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
-      </div>
+      </MainLayout>
     </>
   );
-}
+};
 
-export default Alarms
+export default Alarms;

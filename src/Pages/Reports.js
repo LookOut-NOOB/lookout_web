@@ -1,25 +1,16 @@
-import React from 'react'
-import Navbar from "../Components/Navbar";
-import Sidebar from "../Components/Sidebar";
-
+import React from "react";
+import MainLayout from "../Components/layout/MainLayout";
 
 const Reports = () => {
   return (
     <>
-      {/* Navbar */}
-      <Navbar />
-
-      <div>
-        {/* Sidebar */}
-        <Sidebar highlight="report" />
-
-        {/* Main Content */}
+      <MainLayout>
         <section className="mainSection">
           <div className="container-md m-5">Reports</div>
         </section>
-      </div>
+      </MainLayout>
     </>
   );
-}
+};
 
-export default Reports
+export default Reports;
