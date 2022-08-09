@@ -7,7 +7,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 const Alarms = () => {
   return (
     <>
-      <MainLayout highlight="alarms">
+      <MainLayout highlight="alarm">
         <section>
           <p className="font-bold text-2xl my-4">Alarms !</p>
           <div className="justify-center text-center flex flex-row space-x-8">

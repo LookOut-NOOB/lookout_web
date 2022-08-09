@@ -9,7 +9,7 @@ import Dashboard from "./Pages/Dashboard";
 import SignUp from "./Pages/Auth/SignUp";
 import RecoverPassword from "./Pages/Auth/RecoverPassword";
 import Alarms from "./Pages/Alarms";
-import Reports from "./Pages/Reports";
+import Ambulance from "./Pages/Ambulance";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/alarms" element={<Alarms />} />
-        <Route path="/reports" element={<Reports />} />
+        <Route path="/ambulance" element={<Ambulance />} />
       </Routes>
     </Router>
   );

@@ -87,7 +87,7 @@ const Sidebar = ({ highlight }) => {
               ambulance ? "relative underline decoration-white" : "relative"
             }
           >
-            <a className="flex items-center overflow-hidden" href="/home">
+            <a className="flex items-center overflow-hidden" href="/ambulance">
               <MedicationOutlinedIcon className="text-white" />
               <span className="text-white mx-2">Ambulance</span>
             </a>

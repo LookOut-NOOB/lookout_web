@@ -8,7 +8,7 @@ import MedicationOutlinedIcon from "@mui/icons-material/MedicationOutlined";
 const Dashboard = () => {
   return (
     <>
-      <MainLayout>
+      <MainLayout highlight="dashboard">
         <section>
           <p className="font-bold text-2xl my-4">Welcome !</p>
           {/* Numerical stats */}
