@@ -1,5 +1,5 @@
 import React from "react";
-import MainLayout from "../Components/layout/MainLayout";
+import MainLayout from "../../Components/layout/MainLayout";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import NotificationsOffOutlinedIcon from "@mui/icons-material/NotificationsOffOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";

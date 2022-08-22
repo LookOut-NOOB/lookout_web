@@ -5,11 +5,13 @@ import "./App.css";
 
 // Pages
 import Login from "./Pages/Auth/Login";
-import Dashboard from "./Pages/Dashboard";
 import SignUp from "./Pages/Auth/SignUp";
 import RecoverPassword from "./Pages/Auth/RecoverPassword";
-import Alarms from "./Pages/Alarms";
-import Ambulance from "./Pages/Ambulance";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import Alarms from "./Pages/Alarm/Alarms";
+import Ambulance from "./Pages/Ambulance/Ambulance";
+import Contacts from "./Pages/Contacts/Contacts";
+import Incident from "./Pages/Incident/Incident";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/alarms" element={<Alarms />} />
         <Route path="/ambulance" element={<Ambulance />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/incident" element={<Incident />} />
       </Routes>
     </Router>
   );

@@ -9,7 +9,7 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 const Sidebar = ({ highlight }) => {
   let dashboard = false;
   let alarm = false;
-  let report = false;
+  let incident = false;
   let ambulance = false;
   let contacts = false;
   let locations = false;
@@ -21,8 +21,8 @@ const Sidebar = ({ highlight }) => {
     case "alarm":
       alarm = true;
       break;
-    case "report":
-      report = true;
+    case "incident":
+      incident = true;
       break;
     case "ambulance":
       ambulance = true;
@@ -64,12 +64,12 @@ const Sidebar = ({ highlight }) => {
           </li>
           <li
             className={
-              report ? "relative underline decoration-white" : "relative"
+              incident ? "relative underline decoration-white" : "relative"
             }
           >
-            <a className="flex items-center overflow-hidden" href="/home">
+            <a className="flex items-center overflow-hidden" href="/incident">
               <SummarizeOutlinedIcon className="text-white" />
-              <span className="text-white mx-2">Report</span>
+              <span className="text-white mx-2">Incident</span>
             </a>
           </li>
           <li
@@ -77,7 +77,7 @@ const Sidebar = ({ highlight }) => {
               contacts ? "relative underline decoration-white" : "relative"
             }
           >
-            <a className="flex items-center overflow-hidden" href="/home">
+            <a className="flex items-center overflow-hidden" href="/contacts">
               <PermContactCalendarOutlinedIcon className="text-white" />
               <span className="text-white mx-2">Contacts</span>
             </a>
@@ -97,7 +97,7 @@ const Sidebar = ({ highlight }) => {
               locations ? "relative underline decoration-white" : "relative"
             }
           >
-            <a className="flex items-center overflow-hidden" href="/home">
+            <a className="flex items-center overflow-hidden" href="/location">
               <LocationOnOutlinedIcon className="text-white" />
               <span className="text-white mx-2">Location</span>
             </a>

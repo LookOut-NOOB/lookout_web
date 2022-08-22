@@ -1,5 +1,5 @@
 import React from "react";
-import MainLayout from "../Components/layout/MainLayout";
+import MainLayout from "../../Components/layout/MainLayout";
 import MedicationOutlinedIcon from "@mui/icons-material/MedicationOutlined";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
