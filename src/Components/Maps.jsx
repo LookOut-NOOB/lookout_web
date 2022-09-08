@@ -10,7 +10,7 @@ export const Maps = ({ type }) => {
   const libraries = ["places"];
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAQewpNI1z6v6zCoYRyPs8Ay4yGO3FinRI",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
