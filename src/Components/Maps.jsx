@@ -1,10 +1,34 @@
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import { useMemo } from "react";
 import React from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
 
-export default function Location() {
+export const Maps = ({ type }) => {
+  const libraries = ["places"];
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyAQewpNI1z6v6zCoYRyPs8Ay4yGO3FinRI",
+    libraries,
+  });
+
+  if (!isLoaded) return <div>Loading...</div>;
+  if (type === "map") return <Map />;
+  if (type === "location") return <Location />;
+};
+
+function Map() {
+  const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+  return (
+    <GoogleMap zoom={10} center={center} mapContainerClassName="h-96 w-full">
+      <MarkerF position={center} />
+    </GoogleMap>
+  );
+}
+
+function Location() {
   const [address, setAddress] = React.useState("");
   const [coordinates, setCoordinates] = React.useState({
     lat: null,

@@ -12,6 +12,7 @@ import Alarms from "./Pages/Alarm/Alarms";
 import Ambulance from "./Pages/Ambulance/Ambulance";
 import Contacts from "./Pages/Contacts/Contacts";
 import Incident from "./Pages/Incident/Incident";
+import { ProtectedRoute } from "./Pages/Auth/protecteRoute";
 
 function App() {
   return (
@@ -21,11 +22,13 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/recover" element={<RecoverPassword />} />
 
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/alarms" element={<Alarms />} />
-        <Route path="/ambulance" element={<Ambulance />} />
-        <Route path="/contacts" element={<Contacts />} />
-        <Route path="/incident" element={<Incident />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/alarms" element={<Alarms />} />
+          <Route path="/ambulance" element={<Ambulance />} />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/incident" element={<Incident />} />
+        </Route>
       </Routes>
     </Router>
   );

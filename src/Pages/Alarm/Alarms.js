@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import MainLayout from "../../Components/layout/MainLayout";
+import { Maps } from "../../Components/Maps";
+
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import NotificationsOffOutlinedIcon from "@mui/icons-material/NotificationsOffOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AlarmData from "./components/Alarms.json";
+import { NewMaps } from "../../Components/NewMaps";
 
 const Alarms = () => {
   // state for filtering through data
@@ -13,18 +16,21 @@ const Alarms = () => {
   // state for content on the modal
   const [alarmDetails, setAlarmDetails] = useState([]);
 
-  let filterTrial = AlarmData.filter((alarm) => alarm.status);
-  console.log(filterTrial);
-
   var filteredList = AlarmData.filter((alarm) => {
     if (activeAlarm) {
       return alarm.status;
     }
-    if (searchValue) {
-      return alarm.name.toLowerCase().includes(searchValue.toLowerCase());
-    }
     if (!activeAlarm) {
       return !alarm.status;
+    } else {
+      return alarm;
+    }
+  });
+
+  // search filter
+  filteredList = filteredList.filter((alarm) => {
+    if (searchValue) {
+      return alarm.name.toLowerCase().includes(searchValue.toLowerCase());
     } else {
       return alarm;
     }
@@ -103,7 +109,7 @@ const Alarms = () => {
               </div>
             </div>
           </div>
-          {/* Modal */}
+          {/* Modal for details of the alarm */}
           <div
             className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
             id="alarmsModal"
@@ -129,11 +135,32 @@ const Alarms = () => {
                   ></button>
                 </div>
                 <div className="modal-body relative p-4">
-                  <div>
-                    <p>{alarmDetails.name}</p>
-                    <p>{alarmDetails.date}</p>
-                    <p>{alarmDetails.contact}</p>
-                    <p>{alarmDetails.location}</p>
+                  <div className="space-y-2 text-gray-400 font-medium">
+                    <p>
+                      Victim Name:
+                      <span className="text-black text-lg">
+                        {alarmDetails.name}
+                      </span>
+                    </p>
+                    <p>
+                      Date of alarm:{" "}
+                      <span className="text-black text-lg">
+                        {alarmDetails.date}
+                      </span>
+                    </p>
+                    <p>
+                      Phone number:{" "}
+                      <span className="text-black text-lg">
+                        {alarmDetails.contact}
+                      </span>
+                    </p>
+                    <button
+                      className="bg-green-500 text-white rounded px-3 py-2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#locationModal"
+                    >
+                      {alarmDetails.location} Location
+                    </button>
                   </div>
                 </div>
                 <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
@@ -150,6 +177,27 @@ const Alarms = () => {
                   >
                     Delete
                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Modal for location */}
+          <div
+            className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+            id="locationModal"
+            tabIndex="-1"
+            aria-labelledby="locationModalTitle"
+            aria-modal="true"
+            role="dialog"
+          >
+            <div className="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
+              <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                <div className="modal-body relative p-4">
+                  <Maps type="map" />
+                  {/* <NewMaps
+                    containerElement={<div style={{ height: `400px` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                  /> */}
                 </div>
               </div>
             </div>

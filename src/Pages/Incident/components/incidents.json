@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Brian Brown",
+    "date": "10 Jan, 2021",
+    "contact": "0780493843",
+    "status": true
+  },
+  {
+    "name": "Alison Tyler",
+    "date": "2 June, 2021",
+    "contact": "08495304343",
+    "status": true
+  },
+  {
+    "name": "John White",
+    "date": "12 Sept, 2022",
+    "contact": "07804935343",
+    "status": false
+  }
+]

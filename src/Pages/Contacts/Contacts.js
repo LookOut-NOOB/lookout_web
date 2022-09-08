@@ -1,4 +1,5 @@
 import MainLayout from "../../Components/layout/MainLayout";
+import { Maps } from "../../Components/Maps";
 import ContactTable from "./components/ContactTable";
 import Location from "./components/Location";
 
@@ -56,12 +57,17 @@ const Contacts = () => {
                     placeholder="Title of Contact"
                     className="w-full p-2 border border-gray-300"
                   />
-                  <Location />
+                  <input
+                    type="number"
+                    placeholder="Phone number"
+                    className="w-full p-2 border border-gray-300"
+                  />
+                  <Maps type="location" />
                 </div>
 
                 <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
                   <button
-                    type="button"
+                    type="submit"
                     className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 
                     active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"

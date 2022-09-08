@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
@@ -38,8 +40,8 @@ const Sidebar = ({ highlight }) => {
   }
 
   return (
-    <div className="flex items-center h-screen">
-      <div className="fixed">
+    <div className="flex items-center h-screen fixed justify-center">
+      <div className="">
         <div
           className="grid grid-rows-6 w-60 h-full shadow-md bg-black text-white font-semibold
          text-lg p-8 rounded-2xl"
@@ -51,66 +53,75 @@ const Sidebar = ({ highlight }) => {
                 dashboard ? "relative underline decoration-white" : "relative"
               }
             >
-              <a
+              <Link
                 className="flex items-center overflow-hidden"
-                href="/dashboard"
+                to="/dashboard"
               >
                 <HomeOutlinedIcon className="text-white" />
                 <span className="text-white mx-2">Home</span>
-              </a>
+              </Link>
             </li>
             <li
               className={
                 alarm ? "relative underline decoration-white" : "relative"
               }
             >
-              <a className="flex items-center overflow-hidden" href="/alarms">
+              <Link className="flex items-center overflow-hidden" to="/alarms">
                 <NotificationsActiveOutlinedIcon className="text-white" />
                 <span className="text-white mx-2">Alarms</span>
-              </a>
+              </Link>
             </li>
             <li
               className={
                 incident ? "relative underline decoration-white" : "relative"
               }
             >
-              <a className="flex items-center overflow-hidden" href="/incident">
+              <Link
+                className="flex items-center overflow-hidden"
+                to="/incident"
+              >
                 <SummarizeOutlinedIcon className="text-white" />
                 <span className="text-white mx-2">Incident</span>
-              </a>
+              </Link>
             </li>
             <li
               className={
                 contacts ? "relative underline decoration-white" : "relative"
               }
             >
-              <a className="flex items-center overflow-hidden" href="/contacts">
+              <Link
+                className="flex items-center overflow-hidden"
+                to="/contacts"
+              >
                 <PermContactCalendarOutlinedIcon className="text-white" />
                 <span className="text-white mx-2">Contacts</span>
-              </a>
+              </Link>
             </li>
             <li
               className={
                 ambulance ? "relative underline decoration-white" : "relative"
               }
             >
-              <a
+              <Link
                 className="flex items-center overflow-hidden"
-                href="/ambulance"
+                to="/ambulance"
               >
                 <MedicationOutlinedIcon className="text-white" />
                 <span className="text-white mx-2">Ambulance</span>
-              </a>
+              </Link>
             </li>
             <li
               className={
                 locations ? "relative underline decoration-white" : "relative"
               }
             >
-              <a className="flex items-center overflow-hidden" href="/location">
+              <Link
+                className="flex items-center overflow-hidden"
+                to="/location"
+              >
                 <LocationOnOutlinedIcon className="text-white" />
                 <span className="text-white mx-2">Location</span>
-              </a>
+              </Link>
             </li>
           </ul>
           <button className="row-span-1 flex items-end justify-center">
