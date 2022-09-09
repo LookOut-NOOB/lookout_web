@@ -1,15 +1,35 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { dB } from "../../firebase/index";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import MainLayout from "../../Components/layout/MainLayout";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
-import IncidentData from "./components/incidents.json";
+import { Maps } from "../../Components/Maps";
 
 const Incident = () => {
   const [searchValue, setSearchValue] = useState("");
   const [incidentDetails, setIncidentDetails] = useState([]);
 
+  //sperate object that is null initially for location in incident details
+  const [locationDetails, setLocationDetails] = useState({
+    latitude: null,
+    longitude: null,
+  });
+
+  //saving incident data
+  const [incident, setIncident] = useState([]);
+  const incidentCollection = collection(dB, "incidents");
+
+  //get data from db
+  useEffect(() => {
+    const getIncident = async () => {
+      const data = await getDocs(incidentCollection);
+      setIncident(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getIncident();
+  }, []);
+
   // search filter
-  var filteredList = IncidentData.filter((alarm) => {
+  var filteredList = incident.filter((alarm) => {
     if (searchValue) {
       return alarm.name.toLowerCase().includes(searchValue.toLowerCase());
     } else {
@@ -48,20 +68,30 @@ const Incident = () => {
                 <div className="grid grid-row divide-y-2">
                   {filteredList.map((incident, index) => {
                     return (
-                      <div className="flex flex-row justify-between items-center">
+                      <div
+                        key={index}
+                        className="flex flex-row justify-between items-center"
+                      >
                         <div className="py-2 flex flex-row items-center space-x-4">
                           <NotificationsActiveOutlinedIcon
                             sx={{ fontSize: 40 }}
                           />
                           <div className="flex flex-col">
                             <p className="font-semibold">{incident.name}</p>
-                            <p>{incident.date}</p>
+                            {/* <p>
+                              {incidentDetails.dateTime.map((time) => (
+                                <span>{time}</span>
+                              ))}
+                            </p> */}
                           </div>
                         </div>
                         <div className="flex flex-row items-center">
                           <button
                             className="text-white py-1 px-3 bg-slate-800 rounded mx-4"
-                            onClick={() => setIncidentDetails(incident)}
+                            onClick={() => {
+                              setIncidentDetails(incident);
+                              setLocationDetails(incident.location);
+                            }}
                             data-bs-toggle="modal"
                             data-bs-target="#incidentModal"
                           >
@@ -108,16 +138,18 @@ const Incident = () => {
                         {incidentDetails.name}
                       </span>
                     </p>
-                    <p>
+                    {/* <p>
                       Date of alarm:{" "}
                       <span className="text-black text-lg">
-                        {incidentDetails.date}
+                        {incidentDetails.dateTime.map((time) => (
+                          <span>{time}</span>
+                        ))}
                       </span>
-                    </p>
+                    </p> */}
                     <p>
-                      Phone number:{" "}
+                      Statement:{" "}
                       <span className="text-black text-lg">
-                        {incidentDetails.contact}
+                        {incidentDetails.statement}
                       </span>
                     </p>
                     <button
@@ -125,7 +157,7 @@ const Incident = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#locationModal"
                     >
-                      {incidentDetails.location} Location
+                      Location
                     </button>
                   </div>
                 </div>
@@ -197,7 +229,7 @@ const Incident = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#locationModal"
                     >
-                      {incidentDetails.location} Location
+                      {locationDetails.latitude} Location
                     </button>
                   </div>
                 </div>
@@ -209,6 +241,28 @@ const Incident = () => {
                   >
                     Save
                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Modal for location */}
+          <div
+            className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+            id="locationModal"
+            tabIndex="-1"
+            aria-labelledby="locationModalTitle"
+            aria-modal="true"
+            role="dialog"
+          >
+            <div className="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
+              <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                <div className="modal-body relative p-4">
+                  <Maps
+                    type="map"
+                    lati={locationDetails.latitude}
+                    long={locationDetails.longitude}
+                  />
                 </div>
               </div>
             </div>

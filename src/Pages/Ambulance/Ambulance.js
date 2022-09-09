@@ -33,11 +33,6 @@ const Ambulance = () => {
   const [ambulance, setAmbulance] = useState([]);
   const ambulanceCollection = collection(dB, "ambulances");
 
-  //saving details for the Modal
-  const [name, setName] = useState();
-  const [phone, setPhone] = useState();
-  const [location, setLocation] = useState();
-
   //get data from db
   useEffect(() => {
     const getAmbulance = async () => {
@@ -46,6 +41,11 @@ const Ambulance = () => {
     };
     getAmbulance();
   }, []);
+
+  //saving details for the Modal
+  const [name, setName] = useState();
+  const [phone, setPhone] = useState();
+  const [location, setLocation] = useState();
 
   return (
     <>
