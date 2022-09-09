@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 
-export const Maps = ({ type }) => {
+export const Maps = ({ type, lati, long }) => {
   const libraries = ["places"];
 
   const { isLoaded } = useLoadScript({
@@ -15,14 +15,20 @@ export const Maps = ({ type }) => {
   });
 
   if (!isLoaded) return <div>Loading...</div>;
-  if (type === "map") return <Map />;
+  if (type === "map") return <Map lati={lati} long={long} />;
   if (type === "location") return <Location />;
 };
 
-function Map() {
-  const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+function Map({ lati, long }) {
+  let latitude = parseFloat(lati);
+  let longitude = parseFloat(long);
+  console.log(latitude);
+  const center = useMemo(
+    () => ({ lat: latitude, lng: longitude }),
+    [latitude, longitude]
+  );
   return (
-    <GoogleMap zoom={10} center={center} mapContainerClassName="h-96 w-full">
+    <GoogleMap zoom={20} center={center} mapContainerClassName="h-96 w-full">
       <MarkerF position={center} />
     </GoogleMap>
   );
@@ -51,8 +57,8 @@ function Location() {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            {/* <p>Latitude: {coordinates.lat}</p>
-            <p>Longitude: {coordinates.lng}</p> */}
+            <p>Latitude: {coordinates.lat}</p>
+            <p>Longitude: {coordinates.lng}</p>
 
             <input
               {...getInputProps({ placeholder: "Type address" })}

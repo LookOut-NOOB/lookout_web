@@ -193,7 +193,11 @@ const Alarms = () => {
             <div className="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
               <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                 <div className="modal-body relative p-4">
-                  <Maps type="map" />
+                  <Maps
+                    type="map"
+                    lati={alarmDetails.lat}
+                    long={alarmDetails.log}
+                  />
                   {/* <NewMaps
                     containerElement={<div style={{ height: `400px` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
