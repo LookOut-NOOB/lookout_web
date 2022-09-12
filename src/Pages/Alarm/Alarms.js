@@ -1,27 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { dB } from "../../firebase/firebase";
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import MainLayout from "../../Components/layout/MainLayout";
 import { Maps } from "../../Components/Maps";
 
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import NotificationsOffOutlinedIcon from "@mui/icons-material/NotificationsOffOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import AlarmData from "./components/Alarms.json";
-import { NewMaps } from "../../Components/NewMaps";
 
 const Alarms = () => {
+  //sperate object that is null initially for location in incident details
+  const [locationDetails, setLocationDetails] = useState({
+    latitude: 0.3476,
+    longitude: 32.5825,
+  });
+
+  //saving alarm data
+  const [alarms, setAlarms] = useState([]); //store alarms data
+  const [userData, setUserData] = useState([]); //stored users data
+  const [user, setUser] = useState([]); //get userId
+  const [userName, setUserName] = useState(" ");
+
+  //get data from db
+  useEffect(() => {
+    const getAlarms = async () => {
+      const data = await getDocs(collection(dB, "alarms"));
+      setAlarms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    const getUsers = async () => {
+      const data = await getDocs(collection(dB, "users"));
+      setUserData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getAlarms();
+    getUsers();
+  }, []);
+
+  const viewIncident = (userId) => {
+    userData.map((user) => {
+      if (user.id === userId) {
+        setUser(user);
+        return user;
+      } else {
+        return true;
+      }
+    });
+  };
+
+  function getUserName(userId) {
+    userData.map((user) => {
+      if (user.id === userId) {
+        setUserName(user.firstName);
+        return user;
+      } else return user;
+    });
+  }
+  console.log(userName);
+
   // state for filtering through data
-  const [activeAlarm, setActiveAlarm] = useState(true);
+  const [activeAlarm, setActiveAlarm] = useState("0");
   const [searchValue, setSearchValue] = useState("");
 
   // state for content on the modal
-  const [alarmDetails, setAlarmDetails] = useState([]);
-
-  var filteredList = AlarmData.filter((alarm) => {
-    if (activeAlarm) {
-      return alarm.status;
+  var filteredList = alarms.filter((alarm) => {
+    if (activeAlarm === "0") {
+      return alarm.status === "0";
     }
-    if (!activeAlarm) {
-      return !alarm.status;
+    if (activeAlarm === "1") {
+      return alarm.status === "1";
     } else {
       return alarm;
     }
@@ -45,22 +90,22 @@ const Alarms = () => {
           <div className="justify-center text-center flex flex-row space-x-8">
             <div
               className={
-                activeAlarm
+                activeAlarm === "0"
                   ? "bg-emerald-800 text-white py-4 px-6 rounded-2xl cursor-pointer border-4 border-gray-800"
                   : "bg-emerald-200 py-4 px-6 rounded-2xl cursor-pointer"
               }
-              onClick={() => setActiveAlarm(true)}
+              onClick={() => setActiveAlarm("0")}
             >
               <NotificationsActiveOutlinedIcon sx={{ fontSize: 45 }} />
               <p className="font-semibold text-xl">Active Alarms</p>
             </div>
             <div
               className={
-                !activeAlarm
+                activeAlarm === "1"
                   ? "bg-emerald-800 text-white py-4 px-6 rounded-2xl cursor-pointer border-4 border-gray-800"
                   : "bg-emerald-200 py-4 px-6 rounded-2xl cursor-pointer"
               }
-              onClick={() => setActiveAlarm(false)}
+              onClick={() => setActiveAlarm("1")}
             >
               <NotificationsOffOutlinedIcon sx={{ fontSize: 45 }} />
               <p className="font-semibold text-xl">Closed Alarms</p>
@@ -82,21 +127,26 @@ const Alarms = () => {
               <div className="my-2 mx-4">
                 <div className="grid grid-row divide-y-2">
                   {filteredList.map((alarms, index) => {
+                    getUserName(alarms.userId);
                     return (
                       <div
                         key={index}
                         className="flex flex-row justify-between items-center cursor-pointer"
                         data-bs-toggle="modal"
                         data-bs-target="#alarmsModal"
-                        onClick={() => setAlarmDetails(alarms)}
+                        onClick={() => {
+                          viewIncident(alarms.userId);
+                          setLocationDetails(alarms.location);
+                          // setUser(alarms.userId);
+                        }}
                       >
                         <div className="py-2 flex flex-row items-center space-x-4">
                           <NotificationsActiveOutlinedIcon
                             sx={{ fontSize: 40 }}
                           />
                           <div className="flex flex-col">
-                            <p className="font-semibold">{alarms.name}</p>
-                            <p>{alarms.date}</p>
+                            <p className="font-semibold">userName</p>
+                            {/* <p>{alarms.date}</p> */}
                           </div>
                         </div>
                         <div>
@@ -110,7 +160,7 @@ const Alarms = () => {
             </div>
           </div>
           {/* Modal for details of the alarm */}
-          <div
+          {/* <div
             className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
             id="alarmsModal"
             tabIndex="-1"
@@ -139,19 +189,19 @@ const Alarms = () => {
                     <p>
                       Victim Name:
                       <span className="text-black text-lg">
-                        {alarmDetails.name}
+                        alarmDetails.name
                       </span>
                     </p>
                     <p>
                       Date of alarm:{" "}
                       <span className="text-black text-lg">
-                        {alarmDetails.date}
+                        alarmDetails.date
                       </span>
                     </p>
                     <p>
                       Phone number:{" "}
                       <span className="text-black text-lg">
-                        {alarmDetails.contact}
+                        alarmDetails.contact
                       </span>
                     </p>
                     <button
@@ -159,7 +209,7 @@ const Alarms = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#locationModal"
                     >
-                      {alarmDetails.location} Location
+                      Location
                     </button>
                   </div>
                 </div>
@@ -180,9 +230,9 @@ const Alarms = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Modal for location */}
-          <div
+          {/* <div
             className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
             id="locationModal"
             tabIndex="-1"
@@ -195,17 +245,13 @@ const Alarms = () => {
                 <div className="modal-body relative p-4">
                   <Maps
                     type="map"
-                    lati={alarmDetails.lat}
-                    long={alarmDetails.log}
+                    lati={locationDetails.latitude}
+                    long={locationDetails.longitude}
                   />
-                  {/* <NewMaps
-                    containerElement={<div style={{ height: `400px` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                  /> */}
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </section>
       </MainLayout>
     </>

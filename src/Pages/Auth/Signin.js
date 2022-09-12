@@ -1,23 +1,27 @@
 import { Shield } from "@mui/icons-material";
-import React, { useRef, useState } from "react";
-import { UserAuth } from "./protecteRoute";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserAuth } from "../../contexts/AuthContext";
 
-const Login = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const navigate = useNavigate();
-
+const Signin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { signIn } = UserAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    if (email === "admin" && password === "admin") {
-      UserAuth("success");
+    setError("");
+    try {
+      setLoading(true);
+      await signIn(email, password);
       navigate("/dashboard");
-    } else setError("Incorrect email or password");
+    } catch (e) {
+      setError(e.message);
+      console.log(e.message);
+    }
   };
 
   return (
@@ -27,6 +31,7 @@ const Login = () => {
           <div className="border border-gray-500 p-10 shadow-2xl rounded">
             <div className="text-center my-4">
               <Shield sx={{ fontSize: 65 }} />
+              <p className="font-bold text-lg">Sign In</p>
             </div>
             <p className="text-red-600 font-semibold">{error}</p>
             <form onSubmit={handleSubmit}>
@@ -36,7 +41,8 @@ const Login = () => {
                   type="text"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   placeholder="Email address"
-                  ref={emailRef}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               {/* Password input */}
@@ -45,13 +51,14 @@ const Login = () => {
                   type="password"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   placeholder="Password"
-                  ref={passwordRef}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
 
               {/* Submit button */}
               <button
-                onClick={handleSubmit}
+                disabled={loading}
                 type="submit"
                 className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
                 data-mdb-ripple="true"
@@ -67,4 +74,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signin;

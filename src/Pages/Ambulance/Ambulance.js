@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { dB } from "../../firebase/index";
+import { dB } from "../../firebase/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import MainLayout from "../../Components/layout/MainLayout";
 import MedicationOutlinedIcon from "@mui/icons-material/MedicationOutlined";

@@ -4,32 +4,69 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Pages
-import Login from "./Pages/Auth/Login";
-import SignUp from "./Pages/Auth/SignUp";
+import Signin from "./Pages/Auth/Signin";
+import { SignUp } from "./Pages/Auth/SignUp";
 import RecoverPassword from "./Pages/Auth/RecoverPassword";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Alarms from "./Pages/Alarm/Alarms";
 import Ambulance from "./Pages/Ambulance/Ambulance";
 import Contacts from "./Pages/Contacts/Contacts";
 import Incident from "./Pages/Incident/Incident";
-import { ProtectedRoute } from "./Pages/Auth/protecteRoute";
+import { AuthContextProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./Pages/Auth/protectedRoute";
+import Community from "./Pages/Community//Community";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/recover" element={<RecoverPassword />} />
-
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/alarms" element={<Alarms />} />
-          <Route path="/ambulance" element={<Ambulance />} />
-          <Route path="/contacts" element={<Contacts />} />
+      <AuthContextProvider>
+        <Routes>
+          <Route path="/" element={<Signin />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/recover" element={<RecoverPassword />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/alarms"
+            element={
+              <ProtectedRoute>
+                <Alarms />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ambulance"
+            element={
+              <ProtectedRoute>
+                <Ambulance />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <ProtectedRoute>
+                <Contacts />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/incident" element={<Incident />} />
-        </Route>
-      </Routes>
+          <Route
+            path="/community"
+            element={
+              <ProtectedRoute>
+                <Community />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </AuthContextProvider>
     </Router>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
@@ -7,8 +8,21 @@ import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import PermContactCalendarOutlinedIcon from "@mui/icons-material/PermContactCalendarOutlined";
 import MedicationOutlinedIcon from "@mui/icons-material/MedicationOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import { UserAuth } from "../../contexts/AuthContext";
 
 const Sidebar = ({ highlight }) => {
+  const { logout } = UserAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+      console.log("You are logged out");
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   let dashboard = false;
   let alarm = false;
   let incident = false;
@@ -117,14 +131,17 @@ const Sidebar = ({ highlight }) => {
             >
               <Link
                 className="flex items-center overflow-hidden"
-                to="/location"
+                to="/community"
               >
                 <LocationOnOutlinedIcon className="text-white" />
                 <span className="text-white mx-2">Location</span>
               </Link>
             </li>
           </ul>
-          <button className="row-span-1 flex items-end justify-center">
+          <button
+            onClick={handleLogout}
+            className="row-span-1 flex items-end justify-center hover:text-xl"
+          >
             Log Out
           </button>
         </div>

@@ -6,9 +6,8 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 
+const libraries = ["places"];
 export const Maps = ({ type, lati, long }) => {
-  const libraries = ["places"];
-
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -57,9 +56,8 @@ function Location() {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <p>Latitude: {coordinates.lat}</p>
-            <p>Longitude: {coordinates.lng}</p>
-
+            {/* <p>Latitude: {coordinates.lat}</p>
+            <p>Longitude: {coordinates.lng}</p> */}
             <input
               {...getInputProps({ placeholder: "Type address" })}
               className="w-full p-2 border border-gray-300"
